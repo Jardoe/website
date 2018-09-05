@@ -1,10 +1,7 @@
 import React from 'react'
 import {
-    BrowserRouter as Router,
     Route,
-    Link,
-    Switch,
-    Redirect
+    Link
   } from 'react-router-dom';
 
 const Books = ({ match }) => {

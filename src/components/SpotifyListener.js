@@ -10,8 +10,8 @@ class SpotifyListener extends Component {
   }
 
   componentDidMount() {
-    const api = new SpotifyHelper('/me/player/currently-playing');
-    api.get().then(data => {
+    const api = new SpotifyHelper();
+    api.getCurrentSong().then(data => {
       this.setState({currentSongData: data})
     }).catch((err) => {
       console.log('spotify api error', err);

@@ -3,17 +3,29 @@ import config from './config';
 
 class SpotifyHelper {
   constructor(apiEndpoint) {
-    this.url = `${config.apiUrl}${apiEndpoint}`,
-      this.token = "BQC5PmEyKoA-dGiS8QsO4LQNDu9k4Bby4VVhEUyfdJXFqg_MjaSge3XK5NFdyiJ0thq7UAQXHfhRCwQxaoPu0zbkRUQpe4xH7srtHOaFrm1-qHLDQFh0WbIoIYS5ODDl1PiTqM7_V3ror_wdoUxw-zRuFfUVendyqYTEn7JpcwPijFizbKLf7dLvTRHRlfDUv29gcNOjlIpO"
+      this.url = `${config.apiUrl}`
+      this.token = "BQAd2r_AAULxvjldWq4IHLMcbuK3RVdmjAsPMHLubsf7dULVK2r9KAsP5dqpMfDdM_CQZCi3syFyv9wlIttdTA_zIrIR1mkociV92GR9X69IlhHBQLNJ_gZFeLIshRO46lnoohBmkMUzA_LbILWq2jBgZ3htnMV8Ih7UxpaPVKyDNUTzVLG7YM_glJxOo5uLGC8WQtT3MGaH"
   }
 
-  async get() {
-    try {
-      const response = await fetch(this.url, {
+  async getSearchResults(query) {
+    try{
+      const response = await fetch(this.url + '/search?type=track&q=' + encodeURIComponent(query), {
         method: 'GET',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        }
+      })
+      return await response.json()
+    } catch (error){
+      return error;
+    }
+  }
+
+  async getCurrentSong() {
+    try {
+      const response = await fetch(this.url + '/me/player/currently-playing', {
+        method: 'GET',
+        headers: {
           'Authorization': `Bearer ${this.token}`
         }
       });
@@ -29,8 +41,6 @@ class SpotifyHelper {
       const response = await fetch(this.url, {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.token}`
         }
       });
