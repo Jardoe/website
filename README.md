@@ -8,6 +8,11 @@ What do I want to put on this website?
   - What I'm currently listening to
     - A way for visitors to add/suggest music I should listen to?
 
+Things to add:
+- Refresh token for spotify.
+- Users can add to playlist.
+
+
 Website name?
   - Marginalia
     - Why I like it: It's the act of scribbling in the margins of a book.
