@@ -11,6 +11,7 @@ class SpotifyListener extends Component {
 
   componentDidMount() {
     const api = new SpotifyHelper();
+    // api.authorize()
     api.getCurrentSong().then(data => {
       this.setState({currentSongData: data})
     }).catch((err) => {
@@ -23,7 +24,7 @@ class SpotifyListener extends Component {
       return (<h1>Loading</h1>)
     } else if (!this.state.currentSongData.is_playing) {
       return (<div>
-        <p>I'm not listening to anything right now, but I was listening to: {this.state.currentSongData.item.name}</p>
+        <p>I&apos;m not listening to anything right now, but the last song I listened to was: {this.state.currentSongData.item.name}</p>
         <p>by: {this.state.currentSongData.item.artists[0].name}</p>
       </div>)
     }

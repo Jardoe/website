@@ -4,7 +4,8 @@ import config from './config';
 class SpotifyHelper {
   constructor(apiEndpoint) {
       this.url = `${config.apiUrl}`
-      this.token = "BQAd2r_AAULxvjldWq4IHLMcbuK3RVdmjAsPMHLubsf7dULVK2r9KAsP5dqpMfDdM_CQZCi3syFyv9wlIttdTA_zIrIR1mkociV92GR9X69IlhHBQLNJ_gZFeLIshRO46lnoohBmkMUzA_LbILWq2jBgZ3htnMV8Ih7UxpaPVKyDNUTzVLG7YM_glJxOo5uLGC8WQtT3MGaH"
+      this.refreshUrl='https://accounts.spotify.com/api/token'
+      this.token = "BQC-Y46RSLHFhQVatFQNoLF54G41oj3weIjvc4CQOg4Hd1eEsb31SXL-s1dIeihFCfw0JPidP_VbRVkczJ2-90wOkgEnDnadzEFwdDGVJCJp5cz8WK57RdUCX_BJLoj386qfdrfYA2mU5IosccJsFwTtjchySVmciXbUMZytE_r8xVzOrSLNcULKO38gP7Nbqy61ofPpXsmT"
   }
 
   async getSearchResults(query) {
@@ -36,7 +37,37 @@ class SpotifyHelper {
     }
   }
 
-  async post(payload){
+  async authorize(){
+    try{
+      const redirect_uri=encodeURIComponent('http://localhost:3000/callback.html');
+      const client_id="d244d73cb12c4b9e8448d972f90788b9"
+      const url = 'https://accounts.spotify.com/authorize/?client_id=' +
+      client_id + '&response_type=code' + '&redirect_uri=' + redirect_uri
+      const response = await fetch(url, {
+        method: 'GET',
+        // redirect: true,
+          headers: {
+            'Access-Control-Allow-Origin' : '*',
+
+        }
+      })
+      console.log(response);
+      return await response
+    } catch(error){
+      return error;
+    }
+  }
+
+
+  // async requestTokens(){
+  //   try{
+  //     const response = await fetch(this.refreshUrl, {
+  //
+  //     })
+  //   }
+  // }
+
+  async addToPlaylist(payload){
     try {
       const response = await fetch(this.url, {
         method: 'POST',

@@ -9,6 +9,7 @@ class PlaylistAdder extends Component {
     super(props)
 
     this.state={
+      query: null,
       tracks: null
     }
 
@@ -22,15 +23,19 @@ class PlaylistAdder extends Component {
     const tracks = encodeURIComponent(track)
     const playlist_id ='0EMUyPY5LOiYmXt46wUv7Z'
     const api = new SpotifyHelper(`/playlists/${playlist_id}/tracks?position=0&uris=${tracks}`)
-    api.post()
+    api.addToPlaylist()
     console.log('song added to playist');
   }
 
   loadSearch(event){
     const api = new SpotifyHelper()
+    this.setState({
+      query: event.target.value
+    })
     api.getSearchResults(event.target.value).then(data => {
       if(!data.tracks){
         this.setState({
+          query: null,
           tracks: null
         })
       } else {
@@ -46,10 +51,9 @@ class PlaylistAdder extends Component {
       <div>
       <p>Add songs to my playlist</p>
       <p>Find song</p>
-      <input type="text" onInput={this.loadSearch} placeholder="Search..."></input>
-      <button>Search</button>
+      <input type="text" className="search-bar" onInput={this.loadSearch} placeholder="Search..."></input>
       <br />
-      <button onClick={this.handleClick}>Add songs!</button>
+      <h1>Showing results for {this.state.query}</h1>
       <SongsList tracks={this.state.tracks} />
     </div>
     )
